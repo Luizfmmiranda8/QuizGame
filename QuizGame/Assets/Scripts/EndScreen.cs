@@ -11,7 +11,7 @@ public class EndScreen : MonoBehaviour
     #endregion
 
     #region EVENTS
-    void Start()
+    void Awake()
     {
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
     }
