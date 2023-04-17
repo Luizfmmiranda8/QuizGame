@@ -50,8 +50,6 @@ public class Timer : MonoBehaviour
                 LoadNextQuestion = true;
             }
         }
-
-        Debug.Log(IsAnsweringQuestion + ": " + timerValue + " = " + FillFraction);
     }
 
     public void CancelTimer()
