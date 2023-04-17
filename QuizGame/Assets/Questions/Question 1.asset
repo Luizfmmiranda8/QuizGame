@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c98ecdce2ad7ae41a7097c5ec48c09c, type: 3}
   m_Name: Question 1
   m_EditorClassIdentifier: 
-  question: How old was Harry when received the letter to Hogwarts?
+  question: How old was Harry when he first received the letter to Hogwarts?
   answers:
   - 9
   - 11
   - 10
   - 13
-  correctAnswerIndex: 1
+  correctAnswerIndex: 2
