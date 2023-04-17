@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -7,12 +9,8 @@ public class Quiz : MonoBehaviour
     #region VARIABLES
     [Header("Questions")]
     [SerializeField] TextMeshProUGUI questionText;
-    [SerializeField] QuestionSO question1;
-    [SerializeField] QuestionSO question2;
-    [SerializeField] QuestionSO question3;
-    [SerializeField] QuestionSO question4;
-    [SerializeField] QuestionSO question5;
-    int currentQuestion = 0;
+    [SerializeField] List<QuestionSO> questions = new List<QuestionSO>();
+    QuestionSO currentQuestion;
 
     [Header("Answers")]
     [SerializeField] GameObject[] answerButtons;
@@ -42,7 +40,7 @@ public class Quiz : MonoBehaviour
     {
         timer = FindObjectOfType<Timer>();
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
-        progressBar.maxValue = 5;
+        progressBar.maxValue = questions.Count;
         progressBar.value = 0;
     }
 
@@ -82,64 +80,36 @@ public class Quiz : MonoBehaviour
 
     void GetNextQuestion()
     {
-        if(currentQuestion <= 5)
-        {
-            currentQuestion++;
+        if(questions.Count > 0)
+        {       
             SetButtonState(true);
             SetDefaultButtonSprite();
-            DisplayQuestion(currentQuestion);
+            GetRandomQuestion();
+            DisplayQuestion();
             progressBar.value++;
             scoreKeeper.IncrementQuestionsSeen();
         }
     }
 
-    void DisplayQuestion(int currentQuestion)
+    void GetRandomQuestion()
     {
-        if(currentQuestion == 1)
-        {
-            questionText.text = question1.GetQuestion();
+        int index = Random.Range(0, questions.Count);
+        currentQuestion = questions[index];
 
-            for(int i = 0; i < answerButtons.Length; i++)
-            {
-                answerButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = question1.GetAnswer(i);
-            }
-        }
-        else if(currentQuestion == 2)
+        if(questions.Contains(currentQuestion))
         {
-            questionText.text = question2.GetQuestion();
-
-            for(int i = 0; i < answerButtons.Length; i++)
-            {
-                answerButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = question2.GetAnswer(i);
-            }
+            questions.Remove(currentQuestion);
         }
-        else if(currentQuestion == 3)
+    }
+
+    void DisplayQuestion()
+    {
+        questionText.text = this.currentQuestion.GetQuestion();
+
+        for(int i = 0; i < answerButtons.Length; i++)
         {
-            questionText.text = question3.GetQuestion();
-
-            for(int i = 0; i < answerButtons.Length; i++)
-            {
-                answerButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = question3.GetAnswer(i);
-            }
-        }
-        else if(currentQuestion == 4)
-        {
-            questionText.text = question4.GetQuestion();
-
-            for(int i = 0; i < answerButtons.Length; i++)
-            {
-                answerButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = question4.GetAnswer(i);
-            }
-        }
-        else if(currentQuestion == 5)
-        {
-            questionText.text = question5.GetQuestion();
-
-            for(int i = 0; i < answerButtons.Length; i++)
-            {
-                answerButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = question5.GetAnswer(i);
-            }
-        }
+            answerButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = this.currentQuestion.GetAnswer(i);
+        }                
     }
 
     void SetButtonState(bool state)
@@ -159,76 +129,17 @@ public class Quiz : MonoBehaviour
     }
 
     void DisplayAnswer(int index)
-    {
-        if(currentQuestion == 1)
+    {     
+        if(index == currentQuestion.GetCorrectAnswerIndex())
         {
-            if(index == question1.GetCorrectAnswerIndex())
-            {
-                questionText.text = "Correct!";
-                answerButtons[index].GetComponent<Image>().sprite = correctAnswerSprite;
-                scoreKeeper.IncrementCorrectAnswers();
-            }
-            else
-            {
-                questionText.text = "Sorry, the correct answer was: \n" + question1.GetAnswer(question1.GetCorrectAnswerIndex());
-                answerButtons[question1.GetCorrectAnswerIndex()].GetComponent<Image>().sprite = correctAnswerSprite;
-            }
+            questionText.text = "Correct!";
+            answerButtons[index].GetComponent<Image>().sprite = correctAnswerSprite;
+            scoreKeeper.IncrementCorrectAnswers();
         }
-        else if(currentQuestion == 2)
+        else
         {
-            if(index == question2.GetCorrectAnswerIndex())
-            {
-                questionText.text = "Correct!";
-                answerButtons[index].GetComponent<Image>().sprite = correctAnswerSprite;
-                scoreKeeper.IncrementCorrectAnswers();
-            }
-            else
-            {
-                questionText.text = "Sorry, the correct answer was: \n" + question2.GetAnswer(question2.GetCorrectAnswerIndex());
-                answerButtons[question2.GetCorrectAnswerIndex()].GetComponent<Image>().sprite = correctAnswerSprite;
-            }
-        }
-        if(currentQuestion == 3)
-        {
-            if(index == question3.GetCorrectAnswerIndex())
-            {
-                questionText.text = "Correct!";
-                answerButtons[index].GetComponent<Image>().sprite = correctAnswerSprite;
-                scoreKeeper.IncrementCorrectAnswers();
-            }
-            else
-            {
-                questionText.text = "Sorry, the correct answer was: \n" + question3.GetAnswer(question3.GetCorrectAnswerIndex());
-                answerButtons[question3.GetCorrectAnswerIndex()].GetComponent<Image>().sprite = correctAnswerSprite;
-            }
-        }
-        if(currentQuestion == 4)
-        {
-            if(index == question4.GetCorrectAnswerIndex())
-            {
-                questionText.text = "Correct!";
-                answerButtons[index].GetComponent<Image>().sprite = correctAnswerSprite;
-                scoreKeeper.IncrementCorrectAnswers();
-            }
-            else
-            {
-                questionText.text = "Sorry, the correct answer was: \n" + question4.GetAnswer(question4.GetCorrectAnswerIndex());
-                answerButtons[question4.GetCorrectAnswerIndex()].GetComponent<Image>().sprite = correctAnswerSprite;
-            }
-        }
-        if(currentQuestion == 5)
-        {
-            if(index == question5.GetCorrectAnswerIndex())
-            {
-                questionText.text = "Correct!";
-                answerButtons[index].GetComponent<Image>().sprite = correctAnswerSprite;
-                scoreKeeper.IncrementCorrectAnswers();
-            }
-            else
-            {
-                questionText.text = "Sorry, the correct answer was: \n" + question5.GetAnswer(question5.GetCorrectAnswerIndex());
-                answerButtons[question5.GetCorrectAnswerIndex()].GetComponent<Image>().sprite = correctAnswerSprite;
-            }
+            questionText.text = "Sorry, the correct answer was: \n" + currentQuestion.GetAnswer(currentQuestion.GetCorrectAnswerIndex());
+            answerButtons[currentQuestion.GetCorrectAnswerIndex()].GetComponent<Image>().sprite = correctAnswerSprite;
         }
     }
     #endregion
