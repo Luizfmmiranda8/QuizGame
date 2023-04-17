@@ -12,9 +12,12 @@ public class Quiz : MonoBehaviour
     [SerializeField] QuestionSO question3;
     [SerializeField] QuestionSO question4;
     [SerializeField] QuestionSO question5;
+    int currentQuestion = 0;
 
     [Header("Answers")]
     [SerializeField] GameObject[] answerButtons;
+    int correctAnswerIndex;
+    bool hasAnsweredEarly;
 
     [Header("Button Colors")]
     [SerializeField] Sprite defaultAnswerSprite;
@@ -23,15 +26,17 @@ public class Quiz : MonoBehaviour
     [Header("Timer")]
     [SerializeField] Image timerImage;
     Timer timer;
-    int correctAnswerIndex;
-    int currentQuestion = 0;
-    bool hasAnsweredEarly;
+
+    [Header("Scoring")]
+    [SerializeField] TextMeshProUGUI scoreText;
+    ScoreKeeper scoreKeeper;
     #endregion
 
     #region EVENTS
     void Start()
     {
         timer = FindObjectOfType<Timer>();
+        scoreKeeper = FindObjectOfType<ScoreKeeper>();
     }
 
     void Update()
@@ -59,6 +64,7 @@ public class Quiz : MonoBehaviour
         DisplayAnswer(index);
         SetButtonState(false);
         timer.CancelTimer();
+        scoreText.text = "Score: " + scoreKeeper.CalculateScore() + "%";
     }
 
     void GetNextQuestion()
@@ -69,6 +75,7 @@ public class Quiz : MonoBehaviour
             SetButtonState(true);
             SetDefaultButtonSprite();
             DisplayQuestion(currentQuestion);
+            scoreKeeper.IncrementQuestionsSeen();
         }
     }
 
@@ -145,6 +152,7 @@ public class Quiz : MonoBehaviour
             {
                 questionText.text = "Correct!";
                 answerButtons[index].GetComponent<Image>().sprite = correctAnswerSprite;
+                scoreKeeper.IncrementCorrectAnswers();
             }
             else
             {
@@ -158,6 +166,7 @@ public class Quiz : MonoBehaviour
             {
                 questionText.text = "Correct!";
                 answerButtons[index].GetComponent<Image>().sprite = correctAnswerSprite;
+                scoreKeeper.IncrementCorrectAnswers();
             }
             else
             {
@@ -171,6 +180,7 @@ public class Quiz : MonoBehaviour
             {
                 questionText.text = "Correct!";
                 answerButtons[index].GetComponent<Image>().sprite = correctAnswerSprite;
+                scoreKeeper.IncrementCorrectAnswers();
             }
             else
             {
@@ -184,6 +194,7 @@ public class Quiz : MonoBehaviour
             {
                 questionText.text = "Correct!";
                 answerButtons[index].GetComponent<Image>().sprite = correctAnswerSprite;
+                scoreKeeper.IncrementCorrectAnswers();
             }
             else
             {
@@ -197,6 +208,7 @@ public class Quiz : MonoBehaviour
             {
                 questionText.text = "Correct!";
                 answerButtons[index].GetComponent<Image>().sprite = correctAnswerSprite;
+                scoreKeeper.IncrementCorrectAnswers();
             }
             else
             {
