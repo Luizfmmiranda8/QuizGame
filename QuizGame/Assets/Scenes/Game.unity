@@ -377,8 +377,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55fc3e90abe425f43bd843a5c5dad483, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  question: {fileID: 11400000, guid: 08c0c9c42f24faa4487bb85df96465ac, type: 2}
   questionText: {fileID: 999309114}
+  question: {fileID: 11400000, guid: 08c0c9c42f24faa4487bb85df96465ac, type: 2}
   answerButtons:
   - {fileID: 2059824444}
   - {fileID: 1873040435}
@@ -386,6 +386,7 @@ MonoBehaviour:
   - {fileID: 826469183}
   defaultAnswerSprite: {fileID: 21300000, guid: 234ed324caa9c814caa25c2f168659a4, type: 3}
   correctAnswerSprite: {fileID: 21300000, guid: e5a79652dbe9a824e94319e736a68543, type: 3}
+  timerImage: {fileID: 340633680}
 --- !u!1 &340633678
 GameObject:
   m_ObjectHideFlags: 0
@@ -1142,9 +1143,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc0378ec36772754fbdf31f4edc09998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToCompletQuestion: 5
-  timeToShowCorrectAnswer: 10
-  isAnsweringQuestion: 0
+  timeToCompleteQuestion: 10
+  timeToShowCorrectAnswer: 5
+  IsAnsweringQuestion: 0
+  LoadNextQuestion: 0
+  FillFraction: 0
 --- !u!4 &1530179747
 Transform:
   m_ObjectHideFlags: 0

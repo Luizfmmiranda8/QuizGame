@@ -5,9 +5,11 @@ using UnityEngine;
 public class Timer : MonoBehaviour
 {
     #region VARIABLES
-    [SerializeField] float timeToCompletQuestion = 30f;
+    [SerializeField] float timeToCompleteQuestion = 30f;
     [SerializeField] float timeToShowCorrectAnswer = 10f;
-    public bool isAnsweringQuestion = false;
+    public bool IsAnsweringQuestion = false;
+    public bool LoadNextQuestion;
+    public float FillFraction;
     float timerValue;
     #endregion
 
@@ -23,21 +25,38 @@ public class Timer : MonoBehaviour
     {
         timerValue -= Time.deltaTime;
 
-        if(timerValue <= 0)
+        if(IsAnsweringQuestion)
         {
-            if(!isAnsweringQuestion)
+            if(timerValue > 0)
             {
-                isAnsweringQuestion = true;
-                timerValue = timeToCompletQuestion;
+                FillFraction = timerValue / timeToCompleteQuestion;
             }
             else
             {
-                isAnsweringQuestion = false;
+                IsAnsweringQuestion = false;
                 timerValue = timeToShowCorrectAnswer;
             }
         }
+        else
+        {
+            if(timerValue > 0)
+            {
+                FillFraction = timerValue / timeToShowCorrectAnswer;
+            }
+            else
+            {
+                IsAnsweringQuestion = true;
+                timerValue = timeToCompleteQuestion;
+                LoadNextQuestion = true;
+            }
+        }
 
-        Debug.Log(timerValue);
+        Debug.Log(IsAnsweringQuestion + ": " + timerValue + " = " + FillFraction);
+    }
+
+    public void CancelTimer()
+    {
+        timerValue = 0;
     }
     #endregion
 }
