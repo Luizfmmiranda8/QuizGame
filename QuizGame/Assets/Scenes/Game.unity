@@ -378,7 +378,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questionText: {fileID: 999309114}
-  question: {fileID: 11400000, guid: 08c0c9c42f24faa4487bb85df96465ac, type: 2}
+  question1: {fileID: 11400000, guid: 08c0c9c42f24faa4487bb85df96465ac, type: 2}
+  question2: {fileID: 11400000, guid: 97a1e74e3efc6b943b0d4c4a1c234ba4, type: 2}
+  question3: {fileID: 11400000, guid: f7cff60f68ac1dc489c7d74e27d11361, type: 2}
+  question4: {fileID: 11400000, guid: 07217f3c7d751ab4d9cd33c01b0aa2b8, type: 2}
+  question5: {fileID: 11400000, guid: 6c079f060bb85b044a008f8212842d71, type: 2}
   answerButtons:
   - {fileID: 2059824444}
   - {fileID: 1873040435}
